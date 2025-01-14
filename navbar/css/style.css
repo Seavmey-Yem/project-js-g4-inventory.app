@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+}
+
+.sidebar {
+    width: 250px;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar .nav-link {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #ffffff33;
+    font-weight: bold;
+}
+
+.main-content header {
+    background-color: #ffffff;
+}
+
+.main-content h4 {
+    margin: 0;
+}
+
+.badge {
+    font-size: 0.9em;
+}
+
+hr {
+    margin: 1.5rem 0;
+}
+
+.navlogout {
+    margin-top: 200%;
+}
