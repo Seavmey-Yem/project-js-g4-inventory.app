@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+}
+
+.sidebar {
+    width: 250px;
+    background: #2f7795;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-link {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #ffffff33;
+    font-weight: bold;
+}
+
+.main-content header {
+    background-color: #ffffff;
+}
+
+.main-content h4 {
+    margin: 0;
+}
+
+
+
+hr {
+    margin: 15px 0;
+}
+
+.navlogout {
+    margin-top: 220%;
+}
+
+.bi-gear {
+    color: #2f7795;
+}
+
+.bi-bell {
+    color: #2f7795;
+}
+
+.bi-person-circle {
+    color: #2f7795;
+}
+
+.bi-house-door,
+.bi-gear-color,
+.bi-box,
+.bi-box-arrow-right {
+    color: #ffffff;
+    padding-right: 10px;
+}
