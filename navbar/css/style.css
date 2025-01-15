@@ -11,7 +11,7 @@ body {
 
 .sidebar h3 {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 10px;
 }
 
 .sidebar .nav-link {
@@ -32,32 +32,26 @@ body {
     margin: 0;
 }
 
-.badge {
-    font-size: 0.9em;
-}
+
 
 hr {
-    margin: 1.5rem 0;
+    margin: 15px 0;
 }
 
 .navlogout {
-    margin-top: 200%;
+    margin-top: 220%;
 }
 
-/* Change the color of all icons */
 .bi-gear {
     color: #2f7795;
-    /* Change to your desired color */
 }
 
 .bi-bell {
     color: #2f7795;
-    /* Change to your desired color */
 }
 
 .bi-person-circle {
     color: #2f7795;
-    /* Change to your desired color */
 }
 
 .bi-house-door,
