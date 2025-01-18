@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVENTORY</title>
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: #2f7795;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-link {
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: #ffffff33;
+    font-weight: bold;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.navlogout {
+    margin-top: 400px;
+}
+
+/* Icon Colors */
+.bi-house-door,
+.bi-gear,
+.bi-box,
+.bi-box-arrow-right {
+    color: #ffffff;
+}
+
+.bi-person-circle,
+.bi-bell,
+.gear {
+    color: #2f7795;
+    
+}
+
+/* Main Content Styles */
+.main-content header {
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.main-content .input-group {
+    max-width: 500px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        z-index: 1050;
+    }
+
+    .main-content {
+        margin-top: 60px;
+    }
+}
+
+
+
+/* ............. */
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    margin: 20px 0;
+    font-size: 2rem;
+}
+
+.top-section {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.search-bar{
+    margin-left: 320px;
+}
+.filters{
+    margin-left: 16px;
+}
+.add-product-form{
+    margin-left: 15px;
+}
+
+.second-section {
+    
+    display: flex;
+    justify-content: center;
+    align-items: end
+}
+
+.search-bar input,
+.filters select,
+.add-product-form input,
+.add-product-form button {
+    padding: 6px;
+    margin: 5px;
+    width: 170px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar input{
+    width: 230px;
+}
+
+.add-product-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-product-form button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+.category {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.category.selected {
+    font-weight: bold;
+    color: darkblue;
+}
+
+        /* Add new product */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        select, input {
+            margin: 10px;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button, submit{
+            color: #ffff;
+            background-color: #4CAF50;
+            border: 1px solid rgba(0,0,0,0.4);
+            border-radius: 4px;
+            border: none;
+        }
+
+        button:hover{
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <nav class="sidebar text-white vh-100 p-3">
+            <h3>INVENTORY</h3>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="#" class="nav-link text-white active"><i class="bi bi-house-door"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-white"><i class="bi bi-box"></i> Categories</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-white"><i class="bi bi-gear"></i> Settings</a></li>
+                <hr class="text-white">
+                <li class="nav-item navlogout"><a href="#" class="nav-link text-white"><i class="bi bi-box-arrow-right"></i> Log Out</a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content w-100">
+            <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
+                <div class="input-group w-50">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                </div>
+                <div>
+                    <button class="btn btn-light"><i class="bi bi-gear gear"></i></button>
+                    <button class="btn btn-light"><i class="bi bi-bell"></i></button>
+                    <button class="btn btn-light"><i class="bi bi-person-circle"></i></button>
+                </div>
+            </header>
+
+
+            <div class="container">
+                <h1>Inventory Management</h1>
+        
+                <!-- Top section with Search, Filters, and Add Product Button -->
+                <div class="top-section">
+                    <div class="second-section">
+                        <h4>Product</h4>
+                        <!-- Search Bar -->
+                        <div class="search-bar">
+                            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+                        </div>
+        
+                        <!-- Filters: Category Filter -->
+                        <div class="filters">
+                            <select id="categoryFilter" onchange="filterProducts()">
+                                <option value="">Filter by Category</option>
+                                <!-- Categories will be dynamically filled -->
+                            </select>
+                        </div>
+        
+                        <!-- Add Product Form -->
+                        <div class="add-product-form">
+                            <button id="addProductBtn">Add Product</button>
+                        </div>
+                    </div>
+                    
+                </div>
+        
+                <!-- Table to display products -->
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Stock</th>
+                            <th>Categories</th>
+                            <th>Stores</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productList">
+                        <!-- Product rows will appear here -->
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+            <!-- The Modal -->
+            <div id="productModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h2>Add New Product</h2>
+                    <form id="productForm" onsubmit="addProduct(event)">
+                        <label for="productName">Product Name:</label><br>
+                        <input type="text" id="productName" required><br><br>
+        
+                        <label for="productStatus">Status:</label><br>
+                        <select id="productStatus">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select><br><br>
+        
+                        <label for="productStock">Stock:</label><br>
+                        <input type="number" id="productStock" required><br><br>
+        
+                        <label for="productCategory">Category:</label><br>
+                        <input type="text" id="productCategory" required><br><br>
+        
+                        <label for="productStore">Store:</label><br>
+                        <input type="number" id="productStore" required><br><br>
+        
+                        <button type="submit">Add Product</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const products = [
+  { name: 'T-shirt White', status: 'Active', stock: '10 in stock', category: 'T-shirt', store: '10' },
+  { name: 'T-shirt Black', status: 'Inactive', stock: '5 in stock', category: 'T-shirt', store: '5' },
+  { name: 'Jeans Blue', status: 'Active', stock: '12 in stock', category: 'Jeans', store: '12' },
+  { name: 'Jeans Black', status: 'Active', stock: '7 in stock', category: 'Jeans', store: '7' },
+  { name: 'Shoes White', status: 'Active', stock: '3 in stock', category: 'Shoes', store: '3' },
+  { name: 'Shoes Black', status: 'Inactive', stock: '0 in stock', category: 'Shoes', store: '0' },
+];
+
+let filteredProducts = [...products]; // Store the filtered products to manage filtering
+let allCategories = [...new Set(products.map(product => product.category))]; // Extract unique categories
+
+// Function to load products into the table
+function loadProducts(products) {
+  const productList = document.getElementById('productList');
+  productList.innerHTML = ''; // Clear the table first
+
+  products.forEach(product => {
+      const row = document.createElement('tr');
+      
+      // Create and append cells for product details
+      row.innerHTML = `
+          <td>${product.name}</td>
+          <td>${product.status}</td>
+          <td>${product.stock}</td>
+          <td class="category" onclick="filterByCategory('${product.category}')">${product.category}</td>
+          <td>${product.store}</td>
+      `;
+
+      productList.appendChild(row);
+  });
+}
+
+// Function to populate the category filter with unique categories
+function populateCategoryFilter() {
+  const categoryFilter = document.getElementById('categoryFilter');
+  categoryFilter.innerHTML = `<option value="">Filter by Category</option>`; // Reset filter options
+
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+  const filteredCategories = allCategories.filter(category => category.toLowerCase().includes(searchTerm));
+  filteredCategories.forEach(category => {
+      const option = document.createElement('option');
+      option.value = category;
+      option.textContent = category;
+      categoryFilter.appendChild(option);
+  });
+}
+
+// Function to handle adding a new product
+function addProduct(event) {
+  event.preventDefault();
+
+  const name = document.getElementById('productName').value;
+  const status = document.getElementById('productStatus').value;
+  const stock = document.getElementById('productStock').value + ' in stock';
+  const category = document.getElementById('productCategory').value;
+  const store = document.getElementById('productStore').value;
+
+  if (name && status && stock && category && store) {
+      const newProduct = { name, status, stock, category, store };
+      products.push(newProduct); // Add to products array
+      allCategories = [...new Set(products.map(product => product.category))]; // Update categories
+      filteredProducts = [...products]; // Reset filtered products list
+      populateCategoryFilter(); // Re-populate category filter
+      loadProducts(filteredProducts); // Reload the table
+      closeModal(); // Close the modal after adding the product
+  }
+}
+
+// Function to filter products based on search and category
+function filterProducts() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const category = document.getElementById('categoryFilter').value;
+
+  filteredProducts = products.filter(product => {
+      // Search filtering
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm) || product.category.toLowerCase().includes(searchTerm);
+
+      // Category filtering
+      const matchesCategory = category ? product.category === category : true;
+
+      return matchesSearch && matchesCategory;
+  });
+
+  loadProducts(filteredProducts);
+}
+
+// Function to filter products by category (clicking on category in table)
+function filterByCategory(category) {
+  document.getElementById('categoryFilter').value = category;
+  filterProducts(); // Reapply the search and category filter
+}
+
+// Function to handle search input
+function searchProducts() {
+  filterProducts(); // Apply both search and category filter
+  populateCategoryFilter(); // Update the category filter options based on search
+}
+
+// Open the modal
+function openModal() {
+  document.getElementById('productModal').style.display = 'block';
+}
+
+// Close the modal
+function closeModal() {
+  document.getElementById('productModal').style.display = 'none';
+}
+
+// Event listener to show the modal when the "Add Product" button is clicked
+document.getElementById('addProductBtn').addEventListener('click', openModal);
+
+// Initial load of products and category filter population
+loadProducts(filteredProducts);
+populateCategoryFilter(); // Populate categories on page load
+
+        // Toggle Sidebar Visibility
+        document.getElementById('toggleSidebar').addEventListener('click', () => {
+        document.querySelector('.sidebar').classList.toggle('d-none');
+        });
+
+        // Highlight Active Link
+        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.addEventListener('click', function () {
+            document.querySelector('.sidebar .nav-link.active')?.classList.remove('active');
+            this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
