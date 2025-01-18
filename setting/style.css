@@ -1,0 +1,168 @@
+
+/* Change the color of all icons */
+.bi-gear {
+    color: #2f7795;
+    /* Change to your desired color */
+  }
+  .bi-bell {
+    color: #2f7795;
+    /* Change to your desired color */
+  }
+  .bi-person-circle {
+    color: #2f7795;
+    /* Change to your desired color */
+  }
+  .bi-house-door,
+  .bi-gear-color,
+  .bi-box,
+  .bi-box-arrow-right {
+    color: #ffffff;
+    padding-right: 10px;
+  } */
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    width: 250px;
+    background: #2f7795;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .sidebar h3 {
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .navlogout {
+    margin-top: 200%;
+  }
+  
+  /* Icon styling */
+  .bi-gear,
+  .bi-bell,
+  .bi-person-circle {
+    color: #2f7795; /* Primary theme color for these icons */
+  }
+  
+  .bi-house-door,
+  .bi-gear-color,
+  .bi-box,
+  .bi-box-arrow-right {
+    color: #ffffff; /* White for sidebar icons */
+    padding-right: 10px;
+  }
+  
+  /* Optional hover effect for sidebar icons */
+  .sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  .sidebar a:hover {
+    background-color: #25667d; /* Slightly darker shade */
+    border-radius: 5px;
+  }
+  .personal-icon{
+    margin-left: 76%;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3%;
+  }
+  
+  .roles-section, .permissions-section {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 58%;
+  }
+  .roles-section{
+    margin-right: 1.5%;
+  }
+  .permissions-section{
+    margin-left: 1.5%;
+  }
+  h4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 15px;
+  }
+  
+  .edit-icon {
+    cursor: pointer;
+    color: #2f7795;
+  }
+  
+  .role-option, .permission-option {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .role-option input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .permission-option {
+    justify-content: space-between;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #2f7795;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(14px);
+  }
+  
+  
+  
