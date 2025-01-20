@@ -1,11 +1,9 @@
-/* General Styles */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
     margin: 0;
 }
 
-/* Sidebar Styles */
 .sidebar {
     width: 250px;
     background: #2f7795;
@@ -38,7 +36,6 @@ body {
     margin-top: 400px;
 }
 
-/* Icon Colors */
 .bi-house-door,
 .bi-gear,
 .bi-box,
@@ -50,10 +47,8 @@ body {
 .bi-bell,
 .gear {
     color: #2f7795;
-    
 }
 
-/* Main Content Styles */
 .main-content header {
     background-color: #ffffff;
     position: sticky;
@@ -65,7 +60,6 @@ body {
     max-width: 500px;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
@@ -79,3 +73,4 @@ body {
         margin-top: 60px;
     }
 }
+
