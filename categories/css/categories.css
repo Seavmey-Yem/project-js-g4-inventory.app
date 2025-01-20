@@ -1,4 +1,84 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+}
 
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: #2f7795;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-link {
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: #ffffff33;
+    font-weight: bold;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.navlogout {
+    margin-top: 400px;
+}
+
+/* Icon Colors */
+.bi-house-door,
+.bi-gear,
+.bi-box,
+.bi-box-arrow-right {
+    color: #ffffff;
+}
+
+.bi-person-circle,
+.bi-bell,
+.gear {
+    color: #2f7795;
+    
+}
+
+/* Main Content Styles */
+.main-content header {
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.main-content .input-group {
+    max-width: 500px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        z-index: 1050;
+    }
+
+    .main-content {
+        margin-top: 60px;
+    }
+}
 
 /* .main{
     margin: 10px;
