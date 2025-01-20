@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="text/javascript" src="validation.js" defer></script>
+  <link rel="stylesheet" href="../login-signup/style.css">
+  <script type="text/javascript" src="../login-signup/validation.js" defer></script>
 </head>
 <body>
   <div class="wrapper">
     <h1>Signup</h1>
-    <p id="error-message" style="color: red;"></p>
+    <p id="error-message"></p>
     <form id="signup-form">
       <div>
         <label for="firstname-input">
@@ -38,36 +38,35 @@
       </div>
       <button type="submit">Signup</button>
     </form>
-    <p>Already have an Account? <a href="login.html">login</a> </p>
+    <p>Already have an Account? <a href="login.html">login</a></p>
   </div>
   <script>
-    document.getElementById('signup-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const firstname = document.getElementById('firstname-input').value.trim();
-        const email = document.getElementById('email-input').value.trim();
-        const password = document.getElementById('password-input').value;
-        const repeatPassword = document.getElementById('repeat-password-input').value;
-        const errorMessage = document.getElementById('error-message');
-
-        // Clear previous error messages
-        errorMessage.textContent = '';
-
-        // Validate input fields
-        if (!firstname || !email || !password || !repeatPassword) {
-            errorMessage.textContent = 'All fields are required.';
-            return;
-        }
-
-        if (password !== repeatPassword) {
-            errorMessage.textContent = 'Passwords do not match.';
-            return;
-        }
-
-        // Simulate user creation (replace with actual API call)
-        alert('Signup successful! Redirecting to login.');
-        window.location.href = 'login.html'; // Redirect to login page
+    // Get the signup form
+    const signupForm = document.getElementById('signup-form');
+    
+    // Handle form submission
+    signupForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+  
+      // Get the input values
+      const email = document.getElementById('email-input').value;
+      const password = document.getElementById('password-input').value;
+      const repeatPassword = document.getElementById('repeat-password-input').value;
+  
+      // Validate if passwords match
+      if (password === repeatPassword) {
+        // Save data to localStorage before redirection
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userPassword', password);
+  
+        // Redirect to the home page
+        window.location.href = 'home.html';
+      } else {
+        // If passwords don't match, show error message
+        document.getElementById('error-message').textContent = 'Passwords do not match.';
+      }
     });
   </script>
+  
 </body>
 </html>
