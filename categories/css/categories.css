@@ -109,7 +109,7 @@ body {
 .form-create .input-text input {
     width: 180%;
     padding: 8px;
-    /* border: 1px solid #ccc; */
+    border: 1px solid #ccc;
     border-radius: 4px;
 }
 .form-create .input-text label {
@@ -141,9 +141,5 @@ a{
     padding:5px;
     margin-right: 10px;
     margin: 5px;
-    /* color: #fff; */
     border-radius: 10px;
 }
-/* .btn{
-    font-weight: bold;
-} */

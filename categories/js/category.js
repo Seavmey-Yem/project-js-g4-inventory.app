@@ -73,7 +73,7 @@ function displayCategory(category) {
     const image = document.createElement('img');
     image.src = category.image; 
     image.classList.add('card-img-top','mt-2');
-    image.style.height = '13rem';
+    image.style.height = '12rem';
     image.style.width = '13.8rem';
     image.style.marginLeft = '0.5rem';
     card.appendChild(image);
@@ -98,9 +98,9 @@ function displayCategory(category) {
     // Add delete button
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('btn', 'btn-danger');
-    deleteButton.style.height = '3rem';
-    deleteButton
+    deleteButton.style.width = '5rem';
     deleteButton.textContent = 'Delete';
+    deleteButton.style.marginLeft = '1rem';
     deleteButton.addEventListener('click', () => {
         contains.removeChild(card);
         removeCategoryFromStorage(category);
@@ -109,17 +109,109 @@ function displayCategory(category) {
     card.appendChild(cardBody);
     contains.appendChild(card);
     // Add edit button
-    const editButton = document.createElement('button');
-    editButton.classList.add('btn', 'btn-primary');
-    editButton.style.height = '3rem';
-    editButton.style.width = '5rem';
-    editButton.style.marginLeft = '1.5rem';
-    editButton.textContent = 'Edit';
-    editButton.addEventListener('click', () => {
-        // TODO: Implement edit functionality
-    });
-    cardBody.appendChild(editButton);
+    // Add edit button
+const editButton = document.createElement('button');
+editButton.classList.add('btn', 'btn-primary');
+editButton.style.width = '5rem';
+editButton.style.marginLeft = '1rem';
+editButton.textContent = 'Edit';
+
+editButton.addEventListener('click', () => {
+    // Populate the form with the current card's data
+    document.getElementById('categoryTitle').value = category.title;
+    document.getElementById('categoryItems').value = category.items;
+
+    // Temporary storage of current image
+    const currentImage = category.image;
+
+    // Open the popup form
+    popupForm.classList.add('active');
+    overlay.classList.add('active');
+
+    // Handle form submission for editing
+    form.onsubmit = (event) => {
+        event.preventDefault();
+
+        const updatedTitle = document.getElementById('categoryTitle').value.trim();
+        const updatedItems = document.getElementById('categoryItems').value.trim();
+        const updatedFileInput = document.getElementById('inputFile').files[0];
+
+        if (updatedTitle && updatedItems) { // Ensure title and items are not empty
+            // If a new image is selected, convert it to a base64 string
+            if (updatedFileInput) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const updatedImage = reader.result;
+
+                    // Update the card and localStorage
+                    updateCategory(category, updatedTitle, updatedItems, updatedImage);
+                };
+                reader.readAsDataURL(updatedFileInput);
+            } else {
+                // If no new image is selected, retain the current image
+                updateCategory(category, updatedTitle, updatedItems, currentImage);
+            }
+        } else {
+            alert('Title and items cannot be empty.'); // Notify user if inputs are invalid
+        }
+
+        // Close popup and reset form
+        popupForm.classList.remove('active');
+        overlay.classList.remove('active');
+        form.reset();
+        form.onsubmit = null; // Reset the form submission handler
+    };
+});
+cardBody.appendChild(editButton);
+
+// Function to update a category in localStorage and UI
+function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
+    // Update localStorage
+    let categories = JSON.parse(localStorage.getItem('categories')) || [];
+    const updated = categories.some((c) => c.image === oldCategory.image); // Check if category exists
+
+    if (updated) {
+        categories = categories.map((c) =>
+            c.image === oldCategory.image
+                ? { title: updatedTitle, items: updatedItems, image: updatedImage }
+                : c
+        );
+        localStorage.setItem('categories', JSON.stringify(categories));
+
+        // Refresh UI
+        contains.innerHTML = ''; // Clear existing cards
+        categories.forEach(displayCategory); // Re-display updated cards
+    } else {
+        alert('Unable to edit: category not found.');
+    }
 }
+
+}
+// Function to update a category in localStorage and UI
+function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
+    // Retrieve existing categories from localStorage
+    let categories = JSON.parse(localStorage.getItem('categories')) || [];
+    
+    // Find the index of the card being edited
+    const categoryIndex = categories.findIndex((c) => c.image === oldCategory.image);
+
+    if (categoryIndex !== -1) {
+        // Update the specific category
+        categories[categoryIndex] = {
+            title: updatedTitle,
+            items: updatedItems,
+            image: updatedImage,
+        };
+        localStorage.setItem('categories', JSON.stringify(categories)); // Save updated categories to localStorage
+
+        // Refresh the UI
+        contains.innerHTML = ''; // Clear existing cards
+        categories.forEach(displayCategory); // Re-render all cards
+    } else {
+        alert('Unable to edit: category not found.'); // Handle error if the category wasn't found
+    }
+}
+
 
 // Function to remove category from localStorage
 function removeCategoryFromStorage(category) {
@@ -133,3 +225,5 @@ window.onload = () => {
     const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
     savedCategories.forEach(displayCategory);
 };
+
+
