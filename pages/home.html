@@ -30,7 +30,7 @@
         }
 
         .search-more {
-            margin-left: 320px;
+            margin-left: 325px;
         }
 
         .filters {
@@ -38,7 +38,7 @@
         }
 
         .add-product-form {
-            margin-left: 15px;
+            margin-left: 16px;
         }
 
         .second-section {
@@ -120,9 +120,9 @@
             color: darkblue;
         }
 
-        input,
-        select,
-        button {
+        .input,
+        .select,
+        .button {
             margin: 10px;
         }
 
@@ -243,17 +243,17 @@
                     <div class="second-section">
                         <h4>Product</h4>
                         <div class="search-more">
-                            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+                            <input type="text" class="input" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
                         </div>
 
                         <div class="filters">
-                            <select id="categoryFilter" onchange="filterProducts()">
+                            <select class="select" id="categoryFilter" onchange="filterProducts()">
                                 <option value="">Filter by Category</option>
                             </select>
                         </div>
 
                         <div class="add-product-form">
-                            <button id="addProductBtn">Add Product</button>
+                            <button class="button" id="addProductBtn">Add Product</button>
                         </div>
                     </div>
                 </div>
@@ -308,8 +308,8 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeModal('deleteModal')">&times;</span>
                     <h2>Are you sure you want to delete this product?</h2>
-                    <button onclick="confirmDelete()">Yes, delete</button>
-                    <button onclick="closeModal('deleteModal')">Cancel</button>
+                    <button class="button" onclick="confirmDelete()">Yes, delete</button>
+                    <button class="button" onclick="closeModal('deleteModal')">Cancel</button>
                 </div>
             </div>
         </div>
