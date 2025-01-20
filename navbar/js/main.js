@@ -29,9 +29,13 @@ document.getElementById("logoutBtn").addEventListener("click", function (event) 
             'Content-Type': 'application/json',
         },
     })
-        .then(() => {
-            // After successful logout on the server, redirect to the login or sign-up page
-            window.location.href = "../pages/log-sign/login.html";
+        .then(response => {
+            if (response.ok) {
+                // After successful logout on the server, redirect to the login or sign-up page
+                window.location.href = "../pages/log-sign/login.html";
+            } else {
+                throw new Error("Server logout failed");
+            }
         })
         .catch((error) => {
             console.error("Logout failed:", error);
