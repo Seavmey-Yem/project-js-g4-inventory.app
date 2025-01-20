@@ -40,5 +40,33 @@
     </form>
     <p>Already have an Account? <a href="login.html">login</a></p>
   </div>
+  <script>
+    // Get the signup form
+    const signupForm = document.getElementById('signup-form');
+    
+    // Handle form submission
+    signupForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+  
+      // Get the input values
+      const email = document.getElementById('email-input').value;
+      const password = document.getElementById('password-input').value;
+      const repeatPassword = document.getElementById('repeat-password-input').value;
+  
+      // Validate if passwords match
+      if (password === repeatPassword) {
+        // Save data to localStorage before redirection
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userPassword', password);
+  
+        // Redirect to the home page
+        window.location.href = 'home.html';
+      } else {
+        // If passwords don't match, show error message
+        document.getElementById('error-message').textContent = 'Passwords do not match.';
+      }
+    });
+  </script>
+  
 </body>
 </html>
