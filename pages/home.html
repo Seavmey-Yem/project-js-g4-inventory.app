@@ -204,41 +204,35 @@
         /* Container for buttons to align side by side */
         .button-container {
             display: flex;
-            gap: 10px; /* Adds space between buttons */
+            gap: 10px;
+            /* Adds space between buttons */
             justify-content: center;
         }
     </style>
 </head>
 
 <body>
-    <div class="d-flex">
+    <div class="d-flex"> <!-- Sidebar -->
         <nav class="sidebar text-white vh-100 p-3">
             <h3>INVENTORY</h3>
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="#" class="nav-link text-white active"><i
-                            class="bi bi-house-door"></i>Dashboard</a>
-                </li>
+                            class="bi bi-house-door"></i>Dashboard</a> </li>
                 <li class="nav-item"><a href="category.html" class="nav-link text-white"><i class="bi bi-box"></i>
-                        Categories</a>
-                </li>
+                        Categories</a> </li>
                 <li class="nav-item"><a href="setting.html" class="nav-link text-white"><i class="bi bi-gear"></i>
-                        Settings</a>
-                </li>
+                        Settings</a> </li>
                 <hr class="text-white">
-                <li class="nav-item navlogout">
-                    <a href="../pages/log-sign/login.html" class="nav-link text-white" id="logoutBtn">
-                        <i class="bi bi-box-arrow-right"></i> Log Out
-                    </a>
-                </li>
-
+                <li class="nav-item navlogout"> <a href="../pages/login.html" class="nav-link text-white"
+                        id="logoutBtn"> <i class="bi bi-box-arrow-right"></i> Log Out </a> </li>
             </ul>
-        </nav>
-
+        </nav> <!-- Main Content -->
         <div class="main-content w-100">
-            <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
+            <header class="d-flex justify-content-between align-items-center p-3 border-bottom"> <button
+                    class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
                 <div class="input-group w-50">
-                    <input type="text" class="form-control" placeholder="Search" id="searchInput" onkeyup="searchProducts()">
+                    <input type="text" class="form-control" placeholder="Search" id="searchInput"
+                        onkeyup="searchProducts()">
                     <span class="input-group-text"><i class="bi bi-search"></i></span>
                 </div>
                 <div>
@@ -254,7 +248,8 @@
                     <div class="second-section">
                         <h4>Product</h4>
                         <div class="search-more">
-                            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+                            <input type="text" id="searchInput" placeholder="Search products..."
+                                onkeyup="searchProducts()">
                         </div>
 
                         <div class="filters">
@@ -458,8 +453,8 @@
 
         function filterProducts() {
             const selectedCategory = document.getElementById('categoryFilter').value;
-            filteredProducts = selectedCategory ? 
-                products.filter(product => product.category === selectedCategory) : 
+            filteredProducts = selectedCategory ?
+                products.filter(product => product.category === selectedCategory) :
                 [...products];
             loadProducts(filteredProducts);
         }
