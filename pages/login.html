@@ -30,5 +30,29 @@
     </form>
     <p>New here? <a href="signup.html">Create an Account</a></p>
   </div>
+ 
+  <script>
+    const loginForm = document.getElementById('login-form');
+  
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      const email = document.getElementById('email-input').value;
+      const password = document.getElementById('password-input').value;
+  
+      // Retrieve the user data from localStorage
+      const user = JSON.parse(localStorage.getItem('user'));
+  
+      if (user && user.email === email && user.password === password) {
+        // Login successful, redirect to home page
+        window.location.href = 'home.html';
+      } else {
+        // Display error message if credentials are incorrect
+        document.getElementById('error-message').textContent = 'Invalid email or password.';
+      }
+    });
+  </script>
+  
+  
 </body>
 </html>
