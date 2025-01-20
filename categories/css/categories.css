@@ -80,9 +80,10 @@ body {
     }
 }
 
-.main{
+/* .main{
     margin: 10px;
-}
+} */
+/* popup ==========================*/
 .popup {
     display: none;
     position: fixed;
@@ -108,7 +109,7 @@ body {
 .form-create .input-text input {
     width: 180%;
     padding: 8px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 4px;
 }
 .form-create .input-text label {
@@ -131,3 +132,18 @@ body {
 a{
     cursor: pointer;
 }
+/* scrol Item===================== */
+.contains{
+    overflow-y: scroll; height:500px;
+}
+.main{
+    background:#2f769560;
+    padding:5px;
+    margin-right: 10px;
+    margin: 5px;
+    /* color: #fff; */
+    border-radius: 10px;
+}
+/* .btn{
+    font-weight: bold;
+} */

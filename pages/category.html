@@ -47,14 +47,14 @@
                 </div>
             </header>
             <!-- Container for Cards -->
-            <div id="contains" class="container py-3" style="height: calc(79.5% + 80px);">
-                <div class="main d-flex justify-content-between">
-                    <div class="right">
-                        <h2>Categories</h2>
-                        <p class="update" id="to-update">Last update January 13, 2025, at 12.20 PM</p>
-                    </div>
-                    <button id="addCategoryButton" class="btn btn-primary h-25 mt-2">+ Add Category</button>
+            <div class="main d-flex justify-content-between">
+                <div class="right">
+                    <h2>Categories</h2>
+                    <p class="update" id="to-update">Last update January 13, 2025, at 12.20 PM</p>
                 </div>
+                <button id="addCategoryButton" class="btn btn-primary h-30">+ Add Category</button>
+            </div>
+            <div id="contains" class="container py-3" style="height: calc(60.5% + 80px);">
                 <!-- add category form -->
                 <div class="overlay" id="overlay"></div>
                 <div class="popup" id="popupForm">
@@ -81,14 +81,16 @@
                 </div>
                   <!-- cleate card -->
                 <div class="contains d-flex mt-3 gap-3">
-                   <div class="card mt-5" style="width: 15rem; height: 15rem;">
+                   <!-- <div class="card mt-5" style="width: 15rem; height: 15rem;">
                        <img src="../categories/image/father.png" class="card-img-top" alt="..." style="height: 9rem;" >
                        <div class="card-body ">
                          <h5 class="card-title mt-1">title</h5>
-                         <a class=" items" >12items</a>
-                         <button href="#" class="btn btn-danger h-27 " onclick="delete_card ()">Delete</button>
+                         <div id="main_item">
+                             <a class=" items" >12items</a>
+                             <button href="#" class="btn btn-danger h-27 " onclick="delete_card ()">Delete</button>
+                         </div>
                         </div>
-                   </div>
+                   </div> -->
                 </div>
             </div>
         </div>
