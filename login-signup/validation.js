@@ -1,84 +1,74 @@
-// Utility to save user data to localStorage
-function saveUserData(userData) {
-  localStorage.setItem('user', JSON.stringify(userData));
-}
+// Firebase Configuration
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
-// Utility to get user data from localStorage
-function getUserData() {
-  try {
-    return JSON.parse(localStorage.getItem('user'));
-  } catch {
-    return null;
-  }
-}
+const firebaseConfig = {
+    apiKey: "AIzaSyDMPaBMwy5Xm-88wfvp3jl8naayDibcPiw",
+    authDomain: "login-signup-74d64.firebaseapp.com",
+    projectId: "login-signup-74d64",
+    storageBucket: "login-signup-74d64.appspot.com",
+    messagingSenderId: "852453926184",
+    appId: "1:852453926184:web:c7f9b4dc1f1ff54783dc1d",
+};
 
-// Utility to clear user data
-function clearUserData() {
-  localStorage.removeItem('user');
-  sessionStorage.removeItem('authToken');
-}
-const loginForm = document.getElementById('login-form');
-const loginErrorMessage = document.getElementById('login-error-message');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
 
-loginForm?.addEventListener('submit', (e) => {
-  e.preventDefault();
+// Error Handling Utilities
+const setError = (inputId, message) => {
+    const input = document.getElementById(inputId);
+    const errorElement = document.createElement('span');
+    errorElement.className = 'error-text';
+    errorElement.textContent = message;
 
-  const email = document.getElementById('login-email-input').value.trim();
-  const password = document.getElementById('login-password-input').value.trim();
+    input.parentElement.appendChild(errorElement);
+    input.classList.add('is-invalid');
+};
 
-  // Simulated login validation
-  if (email === 'user@example.com' && password === 'password123') {
-    const userData = {
-      fullName: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '123-456-7890',
-      dob: '1990-01-01',
-      roles: ['Manager', 'Editor'],
-      permissions: { view: true, edit: false, create: true },
-    };
+const clearErrors = () => {
+    document.querySelectorAll('.error-text').forEach(el => el.remove());
+    document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+};
 
-    saveUserData(userData); // Save to localStorage
-    sessionStorage.setItem('authToken', 'dummyToken'); // Simulate auth token
-
-    window.location.href = '../pages/home.html'; // Redirect to home
-  } else {
-    loginErrorMessage.textContent = 'Invalid email or password.';
-  }
-});
+// Signup Form Submission
 const signupForm = document.getElementById('signup-form');
-const signupErrorMessage = document.getElementById('signup-error-message');
 
-signupForm?.addEventListener('submit', (event) => {
-  event.preventDefault();
+signupForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearErrors();
 
-  const firstname = document.getElementById('firstname-input').value.trim();
-  const email = document.getElementById('signup-email-input').value.trim();
-  const password = document.getElementById('signup-password-input').value.trim();
-  const repeatPassword = document.getElementById('repeat-password-input').value.trim();
+    const firstname = document.getElementById('firstname-input').value.trim();
+    const email = document.getElementById('email-input').value.trim();
+    const password = document.getElementById('password-input').value;
+    const repeatPassword = document.getElementById('repeat-password-input').value;
 
-  signupErrorMessage.textContent = '';
+    if (password !== repeatPassword) {
+        setError('repeat-password-input', 'Passwords do not match.');
+        return;
+    }
 
-  if (!firstname || !email || !password || !repeatPassword) {
-    signupErrorMessage.textContent = 'All fields are required.';
-    return;
-  }
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-  if (password !== repeatPassword) {
-    signupErrorMessage.textContent = 'Passwords do not match.';
-    return;
-  }
+        await setDoc(doc(db, "users", user.uid), {
+            firstname: firstname,
+            email: email,
+        });
 
-  const userData = {
-    fullName: firstname,
-    email,
-    phone: 'Not Provided',
-    dob: 'Not Provided',
-    roles: ['User'],
-    permissions: { view: true, edit: false, create: false },
-  };
-
-  saveUserData(userData); // Save to localStorage
-
-  alert('Signup successful! Redirecting to login.');
-  window.location.href = 'login.html';
+        window.location.href = '../pages/home.html';
+    } catch (error) {
+        switch (error.code) {
+            case 'auth/weak-password':
+                setError('password-input', 'Password should be at least 6 characters long.');
+                break;
+            case 'auth/email-already-in-use':
+                setError('email-input', 'This email is already in use.');
+                break;
+            default:
+                document.getElementById('error-message').textContent = error.message;
+        }
+    }
 });
