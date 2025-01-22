@@ -108,7 +108,7 @@ function displayCategory(category) {
     cardBody.appendChild(deleteButton);
     card.appendChild(cardBody);
     contains.appendChild(card);
-    // Add edit button
+    
     // Add edit button
 const editButton = document.createElement('button');
 editButton.classList.add('btn', 'btn-primary');
