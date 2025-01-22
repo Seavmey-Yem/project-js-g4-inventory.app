@@ -335,17 +335,32 @@
     </div>
 
     <script>
-        const products = [];
+        // Load products from local storage (if available)
+        const loadProductsFromLocalStorage = () => {
+            const savedProducts = localStorage.getItem('products');
+            if (savedProducts) {
+                return JSON.parse(savedProducts); // Parse the stored JSON data into an array
+            }
+            return []; // If no products are stored, return an empty array
+        };
+    
+        // Save products to local storage
+        const saveProductsToLocalStorage = (products) => {
+            localStorage.setItem('products', JSON.stringify(products)); // Save the products array as a JSON string
+        };
+    
+        // Initialize products array from local storage
+        let products = loadProductsFromLocalStorage();
         let filteredProducts = [...products];
         let allCategories = [...new Set(products.map(product => product.category))];
         let currentEditingProduct = null;
         let productToDelete = null;
-
+    
         // Load products into the table
         function loadProducts(products) {
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
-
+    
             products.forEach((product, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -364,26 +379,29 @@
                 productList.appendChild(row);
             });
         }
-
+    
         // Add or update product
         function addOrUpdateProduct(event) {
             event.preventDefault();
-
+    
             const name = document.getElementById('productName').value;
             const status = document.getElementById('productStatus').value;
             const stock = document.getElementById('productStock').value + ' in stock';
             const category = document.getElementById('productCategory').value;
             const store = document.getElementById('productStore').value;
-
+    
             if (name && status && stock && category && store) {
                 if (currentEditingProduct === null) {
                     const newProduct = { name, status, stock, category, store };
-                    products.push(newProduct);
+                    products.push(newProduct); // Add new product to the array
                 } else {
-                    products[currentEditingProduct] = { name, status, stock, category, store };
+                    products[currentEditingProduct] = { name, status, stock, category, store }; // Update existing product
                     currentEditingProduct = null;
                 }
-
+    
+                // Update the local storage with the new products array
+                saveProductsToLocalStorage(products);
+    
                 allCategories = [...new Set(products.map(product => product.category))];
                 filteredProducts = [...products];
                 populateCategoryFilter();
@@ -392,7 +410,7 @@
                 closeModal('productModal');
             }
         }
-
+    
         // Clear form fields
         function clearForm() {
             document.getElementById('productName').value = '';
@@ -401,17 +419,17 @@
             document.getElementById('productCategory').value = '';
             document.getElementById('productStore').value = '';
         }
-
+    
         // Open Update Modal
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
         }
-
+    
         // Close modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
-
+    
         // Edit a product
         function editProduct(index) {
             const product = products[index];
@@ -421,24 +439,25 @@
             document.getElementById('productCategory').value = product.category;
             document.getElementById('productStore').value = product.store;
             currentEditingProduct = index;
-
+    
             openModal('productModal');
         }
-
+    
         // Confirm Delete Modal
         function confirmDeleteModal(index) {
             productToDelete = index;
             openModal('deleteModal');
         }
-
+    
         // Confirm delete and remove product
         function confirmDelete() {
-            products.splice(productToDelete, 1);
+            products.splice(productToDelete, 1); // Remove product from the array
+            saveProductsToLocalStorage(products); // Save updated products array to local storage
             filteredProducts = [...products];
             loadProducts(filteredProducts);
             closeModal('deleteModal');
         }
-
+    
         function searchProducts() {
             const searchTerm = document.getElementById('searchProductInput').value.toLowerCase();  // Adjusted id here
             filteredProducts = products.filter(product =>
@@ -447,7 +466,7 @@
             );
             loadProducts(filteredProducts);
         }
-
+    
         function populateCategoryFilter() {
             const categoryFilter = document.getElementById('categoryFilter');
             categoryFilter.innerHTML = '<option value="">Filter by Category</option>';
@@ -458,33 +477,28 @@
                 categoryFilter.appendChild(option);
             });
         }
-
+    
         function filterByCategory(category) {
             filteredProducts = products.filter(product => product.category === category);
             loadProducts(filteredProducts);
         }
-
+    
         function filterProducts() {
             const selectedCategory = document.getElementById('categoryFilter').value;
-            filteredProducts = selectedCategory ?
-                products.filter(product => product.category === selectedCategory) :
+            filteredProducts = selectedCategory ? 
+                products.filter(product => product.category === selectedCategory) : 
                 [...products];
             loadProducts(filteredProducts);
         }
-
+    
         // Event listener for add product button
         document.getElementById('addProductBtn').addEventListener('click', () => openModal('productModal'));
-
+    
         // Initialize the product table
         loadProducts(filteredProducts);
-
-        document.getElementById('logoutBtn').addEventListener('click', function () {
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userPassword');
-            window.location.href = 'login.html';
-        });
-
+    
     </script>
+    
 </body>
 
 </html>
