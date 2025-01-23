@@ -7,94 +7,10 @@
     <title>INVENTORY</title>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../navbar/css/style.css">
+    <script src="../login-signup/validation.js" defer></script>
     <style>
-        /* General Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-}
-
-/* Sidebar Styles */
-.sidebar {
-    width: 250px;
-    background: #2f7795;
-}
-
-.sidebar h3 {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.sidebar .nav-link {
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .nav-link:hover,
-.sidebar .nav-link.active {
-    background-color: #ffffff33;
-    font-weight: bold;
-}
-
-.sidebar .nav-link i {
-    margin-right: 10px;
-}
-
-.navlogout {
-    margin-top: 400px;
-}
-
-/* Icon Colors */
-.bi-house-door,
-.bi-gear,
-.bi-box,
-.bi-box-arrow-right {
-    color: #ffffff;
-}
-
-.bi-person-circle,
-.bi-bell,
-.gear {
-    color: #2f7795;
-    
-}
-
-/* Main Content Styles */
-.main-content header {
-    background-color: #ffffff;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
-}
-
-.main-content .input-group {
-    max-width: 500px;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: fixed;
-        bottom: 0;
-        z-index: 1050;
-    }
-
-    .main-content {
-        margin-top: 60px;
-    }
-}
-
-        /* /// */
         .container {
             width: 100%;
             margin: 0 auto;
@@ -119,7 +35,7 @@ body {
         }
 
         .filters {
-            margin-left: 15px;
+            margin-left: 16px;
         }
 
         .add-product-form {
@@ -153,16 +69,7 @@ body {
             border: none;
             cursor: pointer;
         }
-        .add-product-form button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
 
-        .add-product-form button:hover {
-            background-color: #45a049;
-        }
         .add-product-form button:hover {
             background-color: #45a049;
         }
@@ -214,11 +121,9 @@ body {
             color: darkblue;
         }
 
-        .searchInput,
-        .selectedCategory,
-        .btn-addproduc,
-        .btn-delete,
-        .btn-cancel {
+        input,
+        select,
+        button {
             margin: 10px;
         }
 
@@ -300,30 +205,35 @@ body {
         /* Container for buttons to align side by side */
         .button-container {
             display: flex;
-            gap: 10px; /* Adds space between buttons */
+            gap: 10px;
+            /* Adds space between buttons */
             justify-content: center;
         }
     </style>
 </head>
 
 <body>
-    <div class="d-flex">
-        <nav class="sidebar text-white vh-108 p-3">
+    <div class="d-flex"> <!-- Sidebar -->
+        <nav class="sidebar text-white vh-100 p-3">
             <h3>INVENTORY</h3>
             <ul class="nav flex-column">
-                <li class="nav-item"><a href="#" class="nav-link text-white active"><i class="bi bi-house-door"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-white"><i class="bi bi-box"></i> Categories</a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-white"><i class="bi bi-gear"></i> Settings</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-white active"><i
+                            class="bi bi-house-door"></i>Dashboard</a> </li>
+                <li class="nav-item"><a href="category.html" class="nav-link text-white"><i class="bi bi-box"></i>
+                        Categories</a> </li>
+                <li class="nav-item"><a href="setting.html" class="nav-link text-white"><i class="bi bi-gear"></i>
+                        Settings</a> </li>
                 <hr class="text-white">
-                <li class="nav-item navlogout"><a href="#" class="nav-link text-white"><i class="bi bi-box-arrow-right"></i> Log Out</a></li>
+                <li class="nav-item navlogout"> <a href="../pages/login.html" class="nav-link text-white"
+                        id="logoutBtn"> <i class="bi bi-box-arrow-right"></i> Log Out </a> </li>
             </ul>
-        </nav>
-
+        </nav> <!-- Main Content -->
         <div class="main-content w-100">
-            <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
+            <header class="d-flex justify-content-between align-items-center p-3 border-bottom"> <button
+                    class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
                 <div class="input-group w-50">
-                    <input type="text" class="form-control" placeholder="Search" id="searchInput" onkeyup="searchProducts()">
+                    <input type="text" class="form-control" placeholder="Search" id="searchInput"
+                        onkeyup="searchProducts()">
                     <span class="input-group-text"><i class="bi bi-search"></i></span>
                 </div>
                 <div>
@@ -339,21 +249,22 @@ body {
                     <div class="second-section">
                         <h4>Product</h4>
                         <div class="search-more">
-                            <input type="text" id="searchProductInput" placeholder="Search products..." onkeyup="searchProducts()" class="searchInput">
+                            <input type="text" id="searchInput" placeholder="Search products..."
+                                onkeyup="searchProducts()">
                         </div>
-        
+
                         <div class="filters">
-                            <select id="categoryFilter" onchange="filterProducts()" class="selectedCategory">
+                            <select id="categoryFilter" onchange="filterProducts()">
                                 <option value="">Filter by Category</option>
                             </select>
                         </div>
-        
+
                         <div class="add-product-form">
-                            <button id="addProductBtn" class="btn-addproduct">Add Product</button>
+                            <button id="addProductBtn">Add Product</button>
                         </div>
                     </div>
                 </div>
-        
+
                 <table id="productTable">
                     <thead>
                         <tr>
@@ -369,7 +280,7 @@ body {
                     </tbody>
                 </table>
             </div>
-        
+
             <!-- The Update Modal -->
             <div id="productModal" class="modal">
                 <div class="modal-content">
@@ -378,66 +289,51 @@ body {
                     <form id="productForm" onsubmit="addOrUpdateProduct(event)">
                         <label for="productName">Product Name:</label><br>
                         <input type="text" id="productName" required><br><br>
-        
+
                         <label for="productStatus">Status:</label><br>
                         <select id="productStatus">
                             <option value="Height stock">Height stock</option>
                             <option value="Low stock">Low stock</option>
                         </select><br><br>
-        
+
                         <label for="productStock">Stock:</label><br>
                         <input type="number" id="productStock" required><br><br>
-        
+
                         <label for="productCategory">Category:</label><br>
                         <input type="text" id="productCategory" required><br><br>
-        
+
                         <label for="productStore">Store:</label><br>
                         <input type="number" id="productStore" required><br><br>
-        
+
                         <button type="submit">Save Product</button>
                     </form>
                 </div>
             </div>
-        
+
             <!-- The Delete Confirmation Modal -->
             <div id="deleteModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal('deleteModal')">&times;</span>
                     <h2>Are you sure you want to delete this product?</h2>
-                    <button onclick="confirmDelete()" class="btn-delete">Yes, delete</button>
-                    <button onclick="closeModal('deleteModal')" class="btn-cancel">Cancel</button>
+                    <button onclick="confirmDelete()">Yes, delete</button>
+                    <button onclick="closeModal('deleteModal')">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Load products from local storage (if available)
-        const loadProductsFromLocalStorage = () => {
-            const savedProducts = localStorage.getItem('products');
-            if (savedProducts) {
-                return JSON.parse(savedProducts); // Parse the stored JSON data into an array
-            }
-            return []; // If no products are stored, return an empty array
-        };
-    
-        // Save products to local storage
-        const saveProductsToLocalStorage = (products) => {
-            localStorage.setItem('products', JSON.stringify(products)); // Save the products array as a JSON string
-        };
-    
-        // Initialize products array from local storage
-        let products = loadProductsFromLocalStorage();
+        const products = [];
         let filteredProducts = [...products];
         let allCategories = [...new Set(products.map(product => product.category))];
         let currentEditingProduct = null;
         let productToDelete = null;
-    
+
         // Load products into the table
         function loadProducts(products) {
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
-    
+
             products.forEach((product, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -456,29 +352,26 @@ body {
                 productList.appendChild(row);
             });
         }
-    
+
         // Add or update product
         function addOrUpdateProduct(event) {
             event.preventDefault();
-    
+
             const name = document.getElementById('productName').value;
             const status = document.getElementById('productStatus').value;
             const stock = document.getElementById('productStock').value + ' in stock';
             const category = document.getElementById('productCategory').value;
             const store = document.getElementById('productStore').value;
-    
+
             if (name && status && stock && category && store) {
                 if (currentEditingProduct === null) {
                     const newProduct = { name, status, stock, category, store };
-                    products.push(newProduct); // Add new product to the array
+                    products.push(newProduct);
                 } else {
-                    products[currentEditingProduct] = { name, status, stock, category, store }; // Update existing product
+                    products[currentEditingProduct] = { name, status, stock, category, store };
                     currentEditingProduct = null;
                 }
-    
-                // Update the local storage with the new products array
-                saveProductsToLocalStorage(products);
-    
+
                 allCategories = [...new Set(products.map(product => product.category))];
                 filteredProducts = [...products];
                 populateCategoryFilter();
@@ -487,7 +380,7 @@ body {
                 closeModal('productModal');
             }
         }
-    
+
         // Clear form fields
         function clearForm() {
             document.getElementById('productName').value = '';
@@ -496,17 +389,17 @@ body {
             document.getElementById('productCategory').value = '';
             document.getElementById('productStore').value = '';
         }
-    
+
         // Open Update Modal
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
         }
-    
+
         // Close modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
-    
+
         // Edit a product
         function editProduct(index) {
             const product = products[index];
@@ -516,34 +409,33 @@ body {
             document.getElementById('productCategory').value = product.category;
             document.getElementById('productStore').value = product.store;
             currentEditingProduct = index;
-    
+
             openModal('productModal');
         }
-    
+
         // Confirm Delete Modal
         function confirmDeleteModal(index) {
             productToDelete = index;
             openModal('deleteModal');
         }
-    
+
         // Confirm delete and remove product
         function confirmDelete() {
-            products.splice(productToDelete, 1); // Remove product from the array
-            saveProductsToLocalStorage(products); // Save updated products array to local storage
+            products.splice(productToDelete, 1);
             filteredProducts = [...products];
             loadProducts(filteredProducts);
             closeModal('deleteModal');
         }
-    
+
         function searchProducts() {
-            const searchTerm = document.getElementById('searchProductInput').value.toLowerCase();  // Adjusted id here
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             filteredProducts = products.filter(product =>
                 product.name.toLowerCase().includes(searchTerm) ||
                 product.category.toLowerCase().includes(searchTerm)
             );
             loadProducts(filteredProducts);
         }
-    
+
         function populateCategoryFilter() {
             const categoryFilter = document.getElementById('categoryFilter');
             categoryFilter.innerHTML = '<option value="">Filter by Category</option>';
@@ -554,28 +446,33 @@ body {
                 categoryFilter.appendChild(option);
             });
         }
-    
+
         function filterByCategory(category) {
             filteredProducts = products.filter(product => product.category === category);
             loadProducts(filteredProducts);
         }
-    
+
         function filterProducts() {
             const selectedCategory = document.getElementById('categoryFilter').value;
-            filteredProducts = selectedCategory ? 
-                products.filter(product => product.category === selectedCategory) : 
+            filteredProducts = selectedCategory ?
+                products.filter(product => product.category === selectedCategory) :
                 [...products];
             loadProducts(filteredProducts);
         }
-    
+
         // Event listener for add product button
         document.getElementById('addProductBtn').addEventListener('click', () => openModal('productModal'));
-    
+
         // Initialize the product table
         loadProducts(filteredProducts);
-    
+
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userPassword');
+            window.location.href = 'login.html';
+        });
+
     </script>
-    
 </body>
 
 </html>
