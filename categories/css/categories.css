@@ -73,6 +73,7 @@ body {
         position: fixed;
         bottom: 0;
         z-index: 1050;
+
     }
 
     .main-content {
@@ -80,9 +81,7 @@ body {
     }
 }
 
-/* .main{
-    margin: 10px;
-} */
+
 /* popup ==========================*/
 .popup {
     display: none;
@@ -95,27 +94,34 @@ body {
     padding: 20px;
     border-radius: 8px;
     z-index: 1000;
-    width: 50%;
+    width: 25%; /* Default width */
 }
+
 .popup.active {
     display: block;
 }
+
 .form-create {
     max-width: 400px;
+    width: 100%; /* Ensures it adjusts to smaller screens */
 }
+
 .form-create .input-text {
     margin-bottom: 15px;
 }
+
 .form-create .input-text input {
-    width: 180%;
+    width: 100%; /* Adjusted to fit the container */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .form-create .input-text label {
     display: block;
     margin-top: 5px;
 }
+
 .overlay {
     display: none;
     position: fixed;
@@ -126,20 +132,68 @@ body {
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
+
 .overlay.active {
     display: block;
 }
-a{
+
+a {
     cursor: pointer;
 }
-/* scrol Item===================== */
-.contains{
-    overflow-y: scroll; height:500px;
+
+/* Scroll Item */
+.contains {
+    overflow-y: scroll;
+    height: 500px;
 }
-.main{
-    background:#2f769560;
-    padding:5px;
-    margin-right: 10px;
-    margin: 5px;
+
+.main {
+    background: #2f769560;
+    padding: 5px;
+    margin: 5px 10px;
     border-radius: 10px;
 }
+
+/* Button */
+.popup-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.popup-form.active {
+    display: block;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .popup {
+        width: 80%; /* Adjust popup width for smaller screens */
+        padding: 15px;
+    }
+
+    .form-create {
+        max-width: 90%; /* Adjust form container for smaller screens */
+    }
+
+    .form-create .input-text input {
+        padding: 10px; /* Slightly larger padding for easier use on touchscreens */
+    }
+}
+
+@media (max-width: 480px) {
+    .popup {
+        width: 90%; /* Adjust popup width for very small screens */
+    }
+
+    .main {
+        margin: 5px; /* Reduce margin for smaller screens */
+    }
+}
+
