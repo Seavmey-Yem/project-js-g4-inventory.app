@@ -49,7 +49,7 @@
                     <h2>Categories</h2>
                     <p class="update" id="to-update">Last update January 13, 2025, at 12.20 PM</p>
                 </div>
-                <button id="addCategoryButton" class="btn btn-primary h-1">+ Add Category</button>
+                <button id="addCategoryButton" class="btn btn-primary mt-3">+ Add Category</button>
             </div>
             <div id="contains" class="container py-3" style="height: calc(60.5% + 80px);">
                 <!-- add category form -->
@@ -75,6 +75,26 @@
                             </form>
                         </div>
                     </div>
+                </div>
+                <!-- edit card -->
+                <div class="overlay" id="overlay"></div>
+                <div class="popup-form" id="popupFormEdit">
+                    <h5>Edit Card</h5>
+                    <form id="editForm">
+                        <div class="mb-3">
+                            <label for="categoryTitle" class="form-label">Title</label>
+                            <input type="text" id="categoryTitle" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryItems" class="form-label">Items</label>
+                            <input type="text" id="categoryItems" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputFile" class="form-label">Image</label>
+                            <input type="file" id="inputFile"  accept="image/jpeg, image/png,image/Jpg"  class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </form>
                 </div>
                   <!-- cleate card -->
                 <div class="contains d-flex mt-3 gap-3">
