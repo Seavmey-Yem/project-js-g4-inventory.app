@@ -5,7 +5,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/setting/style.css">
 <link rel="stylesheet" href="../navbar/css/style.css">
-<script src="/setting/main.js" defer></script>
+
 </head>
 
 <body>
@@ -37,7 +37,9 @@
         <div>
           <button class="btn btn-light"><i class="bi bi-gear gear"></i></button>
           <button class="btn btn-light"><i class="bi bi-bell"></i></button>
-          <button class="btn btn-light"><i class="bi bi-person-circle"></i></button>
+          <a href="../setting/profile.html">
+            <button class="btn btn-light"><i class="bi bi-person-circle"></i></button>
+        </a>
         </div>
       </header>
       <div class="card-body">
@@ -45,7 +47,7 @@
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <h6 class="mb-4 text-dark fs-3 px-5">Personal Setting <span class="edit-icon personal-icon">✎</span></h6>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 ">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div class="form-group">
               <label for="fullName" class="fw-bold">Full Name</label>
               <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
@@ -122,12 +124,46 @@
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary px-5 mt-4">Save Changes</button>
-
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      </div>
+    </div>
+  </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js">
-          
-        </script>
-       
+  <!-- JavaScript added here -->
+  <script>
+    // Wait for the DOM to load
+    document.addEventListener('DOMContentLoaded', function() {
+      const formFields = document.querySelectorAll('input, select');
+      const saveButton = document.querySelector('button[type="submit"]');
+      const editIcons = document.querySelectorAll('.edit-icon');
+      
+      // Disable all form fields initially
+      function disableFields() {
+        formFields.forEach(field => field.setAttribute('disabled', true));
+      }
+      
+      // Enable all form fields
+      function enableFields() {
+        formFields.forEach(field => field.removeAttribute('disabled'));
+      }
+
+      // Handle the edit icon click to enable fields for editing
+      editIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+          enableFields(); // Enable fields for editing
+        });
+      });
+
+      // Handle form submission (save button)
+      saveButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        disableFields(); // Disable fields after saving
+        alert("Changes saved successfully!");
+      });
+      
+      // Initially disable fields to prevent editing until pencil is clicked
+      disableFields();
+    });
+  </script>
 </body>
+</html>
