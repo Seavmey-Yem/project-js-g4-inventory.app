@@ -219,7 +219,7 @@ function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
             items: updatedItems,
             image: updatedImage,
         };
-        localStorage.setItem('categories', JSON.stringify(categories)); // Save updated categories to localStorage
+        localStorage.setItem('categories', JSON.stringify(categories)); 
 
         // Refresh the UI
         contains.innerHTML = '';
@@ -242,5 +242,3 @@ window.onload = () => {
     const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
     savedCategories.forEach(displayCategory);
 };
-
-

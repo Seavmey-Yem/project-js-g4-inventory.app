@@ -179,21 +179,21 @@ a {
     }
 
     .form-create {
-        max-width: 90%; /* Adjust form container for smaller screens */
+        max-width: 90%; 
     }
 
     .form-create .input-text input {
-        padding: 10px; /* Slightly larger padding for easier use on touchscreens */
+        padding: 10px; 
     }
 }
 
 @media (max-width: 480px) {
     .popup {
-        width: 90%; /* Adjust popup width for very small screens */
+        width: 90%; 
     }
 
     .main {
-        margin: 5px; /* Reduce margin for smaller screens */
+        margin: 5px; 
     }
 }
 
