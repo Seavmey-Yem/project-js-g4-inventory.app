@@ -232,10 +232,22 @@ function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
 
 // Function to remove category from localStorage
 function removeCategoryFromStorage(category) {
+    const confirmDelete = confirm(`Are you sure you want to delete the category: ${category.name}?`);
+    if (!confirmDelete) {
+        return; 
+    }
     let categories = JSON.parse(localStorage.getItem('categories')) || [];
     categories = categories.filter(c => c.image !== category.image); 
+    
     localStorage.setItem('categories', JSON.stringify(categories));
+    console.log(`Deleted category:`, category);
+    const categoryElement = document.querySelector(`[data-category-id="${category.id}"]`);
+    if (categoryElement) {
+        categoryElement.remove(); 
+    }
+    alert(`Category "${category.name}" has been successfully deleted.`);
 }
+
 
 // Load saved categories on page load
 window.onload = () => {
