@@ -1,58 +1,55 @@
-// // Select elements for editing and saving
-// const editIcons = document.querySelectorAll('.edit-icon');
-// const inputs = document.querySelectorAll('input');
-// const saveButton = document.querySelector('button[type="submit"]');
-
-// // Initially disable all inputs
-// inputs.forEach(input => input.disabled = true);
-
-// // Toggle edit mode when the edit icon is clicked
-// editIcons.forEach(icon => {
-//   icon.addEventListener('click', () => {
-//     const parentSection = icon.closest('.row, .container'); // Ensure the correct parent is selected
-//     const sectionInputs = parentSection.querySelectorAll('input');
-    
-//     sectionInputs.forEach(input => {
-//       input.disabled = !input.disabled; // Toggle the disabled state
-//       if (!input.disabled) input.focus(); // Focus on the first input when enabling
-//     });
-//   });
-// });
-
-// // Save changes and store in localStorage when the Save button is clicked
-// saveButton.addEventListener('click', (e) => {
-//   e.preventDefault(); // Prevent form submission
-
-//   const formData = {}; // Object to store form data
-
-//   inputs.forEach(input => {
-//     input.disabled = true; // Disable all inputs
-//     if (input.id) {
-//       formData[input.id] = input.value; // Store input values by their ID
-//     }
-//   });
-
-//   // Save form data to localStorage
-//   localStorage.setItem('formData', JSON.stringify(formData));
-
-//   // Show SweetAlert confirmation
-//   Swal.fire({
-//     title: 'Success!',
-//     text: 'Changes have been saved and stored!',
-//     icon: 'success',
-//     confirmButtonText: 'OK'
-//   });
-// });
-
-// // Populate form with stored data on page load
-// window.addEventListener('DOMContentLoaded', () => {
-//   const savedData = JSON.parse(localStorage.getItem('formData'));
-
-//   if (savedData) {
-//     inputs.forEach(input => {
-//       if (savedData[input.id]) {
-//         input.value = savedData[input.id]; // Populate inputs with saved values
-//       }
-//     });
-//   }
-// });
+document.addEventListener("DOMContentLoaded", () => {
+    const fullNameInput = document.getElementById("fullName");
+    const emailInput = document.getElementById("eMail");
+    const phoneInput = document.getElementById("phone");
+    const dobInput = document.querySelector('input[type="date"]');
+    const rolesCheckboxes = document.querySelectorAll(".role-option input");
+    const permissionsCheckboxes = document.querySelectorAll(".permission-option input");
+    const saveButton = document.querySelector(".btn-primary");
+  
+    // Load saved data
+    function loadFormData() {
+      const savedData = JSON.parse(localStorage.getItem("formData"));
+      if (savedData) {
+        fullNameInput.value = savedData.fullName || "";
+        emailInput.value = savedData.email || "";
+        phoneInput.value = savedData.phone || "";
+        dobInput.value = savedData.dob || "";
+  
+        rolesCheckboxes.forEach((checkbox) => {
+          checkbox.checked = savedData.roles.includes(checkbox.id);
+        });
+  
+        permissionsCheckboxes.forEach((checkbox, index) => {
+          checkbox.checked = savedData.permissions[index];
+        });
+      }
+    }
+  
+    // Save form data
+    function saveFormData() {
+      const formData = {
+        fullName: fullNameInput.value,
+        email: emailInput.value,
+        phone: phoneInput.value,
+        dob: dobInput.value,
+        roles: Array.from(rolesCheckboxes)
+          .filter((checkbox) => checkbox.checked)
+          .map((checkbox) => checkbox.id),
+        permissions: Array.from(permissionsCheckboxes).map((checkbox) => checkbox.checked),
+      };
+  
+      localStorage.setItem("formData", JSON.stringify(formData));
+      Swal.fire("Saved!", "Your changes have been saved.", "success");
+    }
+  
+    // Event listener for Save button
+    saveButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      saveFormData();
+    });
+  
+    // Load data on page load
+    loadFormData();
+  });
+  
