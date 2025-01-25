@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../categories/css/categories.css">
     <script src="../categories/js/category.js" defer></script>
+    <link rel="stylesheet" href="/setting/responsive.css">
    
 </head>
 <body>
@@ -33,17 +34,19 @@
         <!-- Main Content -->
          <div class="main-content w-100">
             <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
                 <div class="input-group w-50">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                  <input type="text" class="form-control" placeholder="Search">
+                  <span class="input-group-text"><i class="bi bi-search"></i></span>
                 </div>
                 <div>
-                    <a href="setting.html"><button type="button" class="btn btn-light"><i class="bi bi-gear gear"></i></button></a>
-                    <button class="btn btn-light"><i class="bi bi-bell"></i></button>
-                    <a href="/setting/profile.html"><button class="btn btn-light"><i class="bi bi-person-circle"></i></button></a>
-                    
+                  <button class="btn btn-light"><i class="bi bi-gear gear"></i></button>
+                  <button class="btn btn-light"><i class="bi bi-bell"></i></button>
+                  <a href="../setting/profile.html">
+                    <button class="btn btn-light"><i class="bi bi-person-circle"></i></button>
+                  </a>
                 </div>
-            </header>
+              </header>
             <!-- Container for Cards -->
             <div class="main d-flex justify-content-between">
                 <div class="right">

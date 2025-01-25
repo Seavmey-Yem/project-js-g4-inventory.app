@@ -1,0 +1,59 @@
+
+
+/* Mobile-First Responsive Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+    }
+
+    .sidebar.collapsed {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #toggleSidebar {
+        display: block;
+    }
+
+    .top-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-more {
+        width: 100%;
+    }
+
+    .filters,
+    .add-product-form {
+        width: 100%;
+    }
+
+    table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    table tbody tr td {
+        width: 100%;
+        padding: 5px 0;
+    }
+
+    .modal-content {
+        width: 90%;
+        max-width: 350px;
+    }
+   
+     .per{
+        display: flex;
+       padding: none;
+     }
+}
