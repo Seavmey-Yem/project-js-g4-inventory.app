@@ -213,3 +213,15 @@ window.onload = () => {
         updateLastUpdateText();
     }
 };
+
+const toggleSidebar = document.getElementById("toggleSidebar");
+const sidebar = document.querySelector(".sidebar");
+const mainContent = document.querySelector(".main-content");
+
+toggleSidebar.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+    mainContent.classList.toggle("collapsed");
+});
+
+
+
