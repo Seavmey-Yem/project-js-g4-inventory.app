@@ -4,9 +4,9 @@ const overlay = document.getElementById('overlay');
 const closePopup = document.getElementById('closePopup');
 const form = document.getElementById('categoryForm');
 const contains = document.getElementById('contains');
-const PopupFormEdit = document.getElementById('poupFormEdit');
+const toupdate = document.getElementById('to-update');
 
-console.log('PopupFormEdit');
+
 
 // Open popup
 addCategoryButton.addEventListener('click', () => {
@@ -25,6 +25,20 @@ overlay.addEventListener('click', () => {
     overlay.classList.remove('active');
 });
 
+function updateLastUpdateText() {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    const formattedTime = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+    toupdate.textContent = `Last update/ ${formattedDate}, at ${formattedTime}`;
+}
 // Handle form submission
 form.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -52,6 +66,7 @@ form.addEventListener('submit', (event) => {
 
         // Display category as card
         displayCategory(newCategory);
+        updateLastUpdateText();
 
         // Close popup and reset form
         popupForm.classList.remove('active');
@@ -219,7 +234,7 @@ function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
             items: updatedItems,
             image: updatedImage,
         };
-        localStorage.setItem('categories', JSON.stringify(categories)); // Save updated categories to localStorage
+        localStorage.setItem('categories', JSON.stringify(categories)); 
 
         // Refresh the UI
         contains.innerHTML = '';
@@ -232,10 +247,22 @@ function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
 
 // Function to remove category from localStorage
 function removeCategoryFromStorage(category) {
+    const confirmDelete = confirm(`Are you sure you want to delete the category: ${category.name}?`);
+    if (!confirmDelete) {
+        return; 
+    }
     let categories = JSON.parse(localStorage.getItem('categories')) || [];
     categories = categories.filter(c => c.image !== category.image); 
+    
     localStorage.setItem('categories', JSON.stringify(categories));
+    console.log(`Deleted category:`, category);
+    const categoryElement = document.querySelector(`[data-category-id="${category.id}"]`);
+    if (categoryElement) {
+        categoryElement.remove(); 
+    }
+    alert(`Category "${category.name}" has been successfully deleted.`);
 }
+
 
 // Load saved categories on page load
 window.onload = () => {
@@ -253,4 +280,9 @@ toggleSidebar.addEventListener("click", () => {
 });
 
 
+
+    
+    if (savedCategories.length > 0) {
+        updateLastUpdateText();
+    }
 
