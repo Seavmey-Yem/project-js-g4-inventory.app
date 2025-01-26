@@ -18,11 +18,11 @@
         <nav class="sidebar text-white vh-110 p-3">
             <h3>INVENTORY</h3>
             <ul class="nav flex-column">
-                <li class="nav-item"><a href="home.html" class="nav-link text-white "><i class="bi bi-house-door"></i>Dashboard</a>
+                    <li class="nav-item"><a href="home.html" class="nav-link text-white "><i class="bi bi-house-door"></i>Dashboard</a>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link text-white active"><i class="bi bi-box"></i> Categories</a>
+                    <li class="nav-item"><a href="#" class="nav-link text-white active"><i class="bi bi-box"></i> Categories</a>
                 </li>
-                <li class="nav-item"><a href="setting.html" class="nav-link text-white "><i class="bi bi-gear"></i> Settings</a>
+                    <li class="nav-item"><a href="setting.html" class="nav-link text-white "><i class="bi bi-gear"></i> Settings</a>
                 </li>
                 <hr class="text-white">
                 <li class="nav-item navlogout"> <a href="../pages/login.html" class="nav-link text-white"
@@ -33,6 +33,7 @@
         <!-- Main Content -->
          <div class="main-content w-100">
             <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
                 <div class="input-group w-50">
                     <input type="text" class="form-control" placeholder="Search">
                     <span class="input-group-text"><i class="bi bi-search"></i></span>
@@ -48,7 +49,9 @@
             <div class="main d-flex justify-content-between">
                 <div class="right">
                     <h2>Categories</h2>
-                    <p class="update" id="to-update">Last update January 13, 2025, at 12.20 PM</p>
+                    <p class="update" id="to-update">
+                        <!-- Last update January 13, 2025, at 12.20 PM -->
+                    </p>
                 </div>
                 <button id="addCategoryButton" class="btn btn-primary ">+ Add Category</button>
             </div>
@@ -58,17 +61,18 @@
                 <div class="popup" id="popupForm">
                     <div class="form-create">
                         <div class="form-content">
-                            <h2>Add New</h2>
+                            <h2>Add and Edit New</h2>
                             <form id="categoryForm">
                                 <div class="input-text">
-                                    <input type="text" id="categoryTitle" required>
                                     <label for="categoryTitle">Title</label>
+                                    <input type="text" id="categoryTitle" required>
                                 </div>
                                 <div class="input-text">
-                                    <input type="text" id="categoryItems" required>
                                     <label for="categoryItems">Items</label>
+                                    <input type="text" id="categoryItems" required>
                                 </div>
                                 <div class="input-text">
+                                    <label for="categoryImage">Image</label>
                                     <input type="file" accept="image/jpeg, image/png,image/Jpg" class="files" id="inputFile" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Add</button>

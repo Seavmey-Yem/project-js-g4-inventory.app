@@ -4,9 +4,9 @@ const overlay = document.getElementById('overlay');
 const closePopup = document.getElementById('closePopup');
 const form = document.getElementById('categoryForm');
 const contains = document.getElementById('contains');
-const PopupFormEdit = document.getElementById('poupFormEdit');
+const toupdate = document.getElementById('to-update');
 
-console.log('PopupFormEdit');
+
 
 // Open popup
 addCategoryButton.addEventListener('click', () => {
@@ -25,6 +25,20 @@ overlay.addEventListener('click', () => {
     overlay.classList.remove('active');
 });
 
+function updateLastUpdateText() {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    const formattedTime = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+    toupdate.textContent = `Last update/ ${formattedDate}, at ${formattedTime}`;
+}
 // Handle form submission
 form.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -52,6 +66,7 @@ form.addEventListener('submit', (event) => {
 
         // Display category as card
         displayCategory(newCategory);
+        updateLastUpdateText();
 
         // Close popup and reset form
         popupForm.classList.remove('active');
@@ -253,4 +268,8 @@ function removeCategoryFromStorage(category) {
 window.onload = () => {
     const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
     savedCategories.forEach(displayCategory);
+    
+    if (savedCategories.length > 0) {
+        updateLastUpdateText();
+    }
 };
