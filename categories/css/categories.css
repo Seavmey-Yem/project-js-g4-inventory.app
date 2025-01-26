@@ -68,11 +68,12 @@ body {
 /* Responsive Styles */
 @media (max-width: 768px) {
     .sidebar {
+        position: absolute;
         width: 100%;
         height: auto;
         position: fixed;
         bottom: 0;
-        z-index: 1050;
+        z-index: 1080;
 
     }
 
