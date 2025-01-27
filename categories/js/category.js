@@ -4,26 +4,42 @@ const overlay = document.getElementById('overlay');
 const closePopup = document.getElementById('closePopup');
 const form = document.getElementById('categoryForm');
 const contains = document.getElementById('contains');
-const PopupFormEdit = document.getElementById('poupFormEdit');
+const toupdate = document.getElementById('to-update');
 
-console.log('PopupFormEdit');
+let editingCategory = null; // To keep track of the category being edited
 
 // Open popup
 addCategoryButton.addEventListener('click', () => {
     popupForm.classList.add('active');
     overlay.classList.add('active');
+    editingCategory = null; // Reset editing category
 });
 
 // Close popup
-closePopup.addEventListener('click', () => {
-    popupForm.classList.remove('active');
-    overlay.classList.remove('active');
-});
+closePopup.addEventListener('click', closePopupForm);
+overlay.addEventListener('click', closePopupForm);
 
-overlay.addEventListener('click', () => {
+function closePopupForm() {
     popupForm.classList.remove('active');
     overlay.classList.remove('active');
-});
+    form.reset();
+    editingCategory = null; // Reset editing category
+}
+
+function updateLastUpdateText() {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    const formattedTime = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+    toupdate.textContent = `Last update/ ${formattedDate}, at ${formattedTime}`;
+}
 
 // Handle form submission
 form.addEventListener('submit', (event) => {
@@ -34,32 +50,37 @@ form.addEventListener('submit', (event) => {
     const items = document.getElementById('categoryItems').value;
     const fileInput = document.getElementById('inputFile').files[0];
 
-    if (!fileInput) {
-        alert("Please select an image.");
+    if (!title || !items) {
+        alert("Title and items cannot be empty.");
         return;
     }
 
-    // Convert the image to a base64 string
     const reader = new FileReader();
     reader.onloadend = () => {
         const base64Image = reader.result;
 
-        // Save category to localStorage
-        const newCategory = { title, items, image: base64Image };
-        let categories = JSON.parse(localStorage.getItem('categories')) || [];
-        categories.push(newCategory);
-        localStorage.setItem('categories', JSON.stringify(categories));
+        if (editingCategory) {
+            // Update existing category
+            updateCategoryInStorage(editingCategory, title, items, base64Image);
+            updateCategoryUI(editingCategory.card, title, items, base64Image);
+        } else {
+            // Create new category
+            const newCategory = { title, items, image: base64Image };
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            categories.push(newCategory);
+            localStorage.setItem('categories', JSON.stringify(categories));
+            displayCategory(newCategory);
+        }
 
-        // Display category as card
-        displayCategory(newCategory);
-
-        // Close popup and reset form
-        popupForm.classList.remove('active');
-        overlay.classList.remove('active');
-        form.reset();
+        updateLastUpdateText();
+        closePopupForm();
     };
-    // This converts the image file to a base64 string
-    reader.readAsDataURL(fileInput); 
+
+    if (fileInput) {
+        reader.readAsDataURL(fileInput);
+    } else {
+        alert("Please select an image.");
+    }
 });
 
 // Function to display a category
@@ -71,7 +92,7 @@ function createCardUI(category) {
 
     // Add image
     const image = document.createElement('img');
-    image.src = category.image; 
+    image.src = category.image;
     image.classList.add('card-img-top', 'mt-2');
     image.style.height = '12rem';
     image.style.width = '13.8rem';
@@ -104,6 +125,7 @@ function addCardEventListeners(card, cardBody, category) {
     const contains = document.querySelector(".contains");
     contains.classList.add("d-flex", "flex-wrap");
 
+
     // Add delete button
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('btn', 'btn-danger');
@@ -111,8 +133,11 @@ function addCardEventListeners(card, cardBody, category) {
     deleteButton.textContent = 'Delete';
     deleteButton.style.marginLeft = '1rem';
     deleteButton.addEventListener('click', () => {
-        contains.removeChild(card);
-        removeCategoryFromStorage(category);
+        const confirmDelete = confirm(`Are you sure you want to delete the category: ${category.title}?`);
+        if (confirmDelete) {
+            contains.removeChild(card);
+            removeCategoryFromStorage(category);
+        }
     });
     cardBody.appendChild(deleteButton);
 
@@ -129,46 +154,13 @@ function addCardEventListeners(card, cardBody, category) {
 }
 
 function handleEditCategory(card, category) {
-    const popupForm = document.querySelector('#popupForm');
-    const overlay = document.querySelector('.overlay');
-    const form = document.querySelector('#categoryForm');
-
     document.getElementById('categoryTitle').value = category.title;
     document.getElementById('categoryItems').value = category.items;
-
-    const currentImage = category.image;
 
     popupForm.classList.add('active');
     overlay.classList.add('active');
 
-    form.onsubmit = (event) => {
-        event.preventDefault();
-
-        const updatedTitle = document.getElementById('categoryTitle').value.trim();
-        const updatedItems = document.getElementById('categoryItems').value.trim();
-        const updatedFileInput = document.getElementById('inputFile').files[0];
-
-        if (updatedTitle && updatedItems) {
-            if (updatedFileInput) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const updatedImage = reader.result;
-                    updateCategoryUI(card, updatedTitle, updatedItems, updatedImage);
-                    updateCategoryInStorage(category, updatedTitle, updatedItems, updatedImage);
-                };
-                reader.readAsDataURL(updatedFileInput);
-            } else {
-                updateCategoryUI(card, updatedTitle, updatedItems, currentImage);
-                updateCategoryInStorage(category, updatedTitle, updatedItems, currentImage);
-            }
-        } else {
-            alert('Title and items cannot be empty.');
-        }
-
-        popupForm.classList.remove('active');
-        overlay.classList.remove('active');
-        form.reset();
-    };
+    editingCategory = { card, ...category }; // Store the category being edited
 }
 
 function displayCategory(category) {
@@ -203,37 +195,12 @@ function updateCategoryInStorage(oldCategory, updatedTitle, updatedItems, update
     } else {
         alert('Unable to edit: category not found.');
     }
-}    
-// Function to update a category in localStorage and UI
-function updateCategory(oldCategory, updatedTitle, updatedItems, updatedImage) {
-    // Retrieve existing categories from localStorage
-    let categories = JSON.parse(localStorage.getItem('categories')) || [];
-    
-    // Find the index of the card being edited
-    const categoryIndex = categories.findIndex((c) => c.image === oldCategory.image);
-
-    if (categoryIndex !== -1) {
-        // Update the specific category
-        categories[categoryIndex] = {
-            title: updatedTitle,
-            items: updatedItems,
-            image: updatedImage,
-        };
-        localStorage.setItem('categories', JSON.stringify(categories)); // Save updated categories to localStorage
-
-        // Refresh the UI
-        contains.innerHTML = '';
-        categories.forEach(displayCategory); 
-    } else {
-        alert('Unable to edit: category not found.'); 
-    }
 }
-
 
 // Function to remove category from localStorage
 function removeCategoryFromStorage(category) {
     let categories = JSON.parse(localStorage.getItem('categories')) || [];
-    categories = categories.filter(c => c.image !== category.image); 
+    categories = categories.filter(c => c.image !== category.image);
     localStorage.setItem('categories', JSON.stringify(categories));
 }
 
@@ -241,6 +208,10 @@ function removeCategoryFromStorage(category) {
 window.onload = () => {
     const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
     savedCategories.forEach(displayCategory);
+
+    if (savedCategories.length > 0) {
+        updateLastUpdateText();
+    }
 };
 
 const toggleSidebar = document.getElementById("toggleSidebar");
@@ -251,6 +222,8 @@ toggleSidebar.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
     mainContent.classList.toggle("collapsed");
 });
+
+
 
 
 
